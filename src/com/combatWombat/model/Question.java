@@ -45,7 +45,10 @@ public class Question {
     private List<String> setAnswerChoices(List<String> answerChoices) {
         List<String> shuffledList = new ArrayList<>();
         Collections.shuffle(answerChoices);
-        Map<String,String> choiceMap = new HashMap<>();
+        for(String answer: answerChoices){
+            shuffledList.add(answer);
+        }
+        choiceMap = new HashMap<>();
         choiceMap.put("A", shuffledList.get(0));
         choiceMap.put("B", shuffledList.get(1));
         choiceMap.put("C", shuffledList.get(2));

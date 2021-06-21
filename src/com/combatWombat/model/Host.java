@@ -5,7 +5,7 @@ import java.util.*;
 
 public class Host {
     private static final int SCORE_CHANGE_VALUE = 10;
-    private static final int RANDOM_INTEGER_BOUND = 99;
+    private static final int RANDOM_INTEGER_BOUND = 10;
     List<Question> questions;//probably try catch in the constructor
     List<Question> filteredQuestions;
     List<Integer> usedQuestions = new ArrayList<>();
@@ -40,7 +40,9 @@ public class Host {
         System.out.println();
         String choiceChars = "ABCD";
         for(int i = 0; i < choiceChars.length(); i++){
-            System.out.print(choiceChars.charAt(i) + filteredQuestions.get(questionIndex).getAnswerChoices().get(i));
+            System.out.print(choiceChars.charAt(i) +
+                    ") " +filteredQuestions.get(questionIndex).getAnswerChoices().get(i));
+            System.out.println();
         }
 
     }
@@ -56,10 +58,10 @@ public class Host {
         if( filteredQuestions.get(usedQuestions.get(usedQuestions.size() - 1)).
                 verifyAnswer(playerAnswer)){
             player.setScore(player.getScore() + SCORE_CHANGE_VALUE);
-            System.out.println("You got it right!!~!~~~ 10 points");
+            System.out.println("You got it right!!~!~~~ 10 points, you are at " + player.getScore());
         } else{
             player.setScore(player.getScore() - SCORE_CHANGE_VALUE);
-            System.out.println("You suck - 10 points");
+            System.out.println("You suck - 10 points, you are at " + player.getScore());
         }
 
     }
@@ -105,7 +107,6 @@ public class Host {
         }else{
             System.out.println("Thanks for playing! See you next time.");
         }
-        scan.close();
         return result;
 
     }
