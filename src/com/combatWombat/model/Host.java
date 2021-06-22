@@ -8,16 +8,17 @@ public class Host {
     private static final int RANDOM_INTEGER_BOUND = 10;
     List<Question> questions;//probably try catch in the constructor
     List<Question> filteredQuestions;
-    List<Integer> usedQuestions = new ArrayList<>();
+    List<Integer> usedQuestions;
 
     public Host(Category category) {
-            try{
-                this.questions = new QuestionLoader("data/question-data.csv").load();
-            }catch (IOException e ){
-                System.out.println(e.getStackTrace());
-            }
+        try {
+            this.questions = new QuestionLoader("data/question-data.csv").load();
+        } catch (IOException e) {
+            System.out.println(e.getStackTrace());
+        }
 
-            this.filteredQuestions = getQuestionsByCategory(category);
+        this.filteredQuestions = getQuestionsByCategory(category);
+        this.usedQuestions = new ArrayList<>();
     }
 
     /**
@@ -25,41 +26,44 @@ public class Host {
      * It should also not ask the same question twice in one game.
      */
     public void askQuestion() {
-        Random rand = new Random();
-        Integer questionIndex = Integer.valueOf(rand.nextInt(RANDOM_INTEGER_BOUND));
-        if(usedQuestions.contains(questionIndex)){
-            questionIndex = rand.nextInt(RANDOM_INTEGER_BOUND);
-            usedQuestions.add(Integer.valueOf(questionIndex));
-        }else{
-            usedQuestions.add(Integer.valueOf(questionIndex));
-        }
-        //make own private helper method^^^^^
-
+        Integer questionIndex = checkIfQuestionUsed();
         System.out.println("Answer the following with A,B,C, or D");
         System.out.println(filteredQuestions.get(questionIndex).getQuestionText());
         System.out.println();
         String choiceChars = "ABCD";
-        for(int i = 0; i < choiceChars.length(); i++){
+        for (int i = 0; i < choiceChars.length(); i++) {
             System.out.print(choiceChars.charAt(i) +
-                    ") " +filteredQuestions.get(questionIndex).getAnswerChoices().get(i));
+                    ") " + filteredQuestions.get(questionIndex).getAnswerChoices().get(i));
             System.out.println();
         }
+    }
 
+    public Integer checkIfQuestionUsed() {
+        Random rand = new Random();
+        Integer questionIndex = Integer.valueOf(rand.nextInt(RANDOM_INTEGER_BOUND));
+        if (usedQuestions.contains(questionIndex)) {
+            questionIndex = rand.nextInt(RANDOM_INTEGER_BOUND);
+            usedQuestions.add(Integer.valueOf(questionIndex));
+        } else {
+            usedQuestions.add(Integer.valueOf(questionIndex));
+        }
+        return questionIndex;
     }
 
     /**
      * This method will take in the players answer, and based on output from the Question class'
      * verifyAnswer() method, it will change the players current score.
+     *
      * @param playerAnswer The players answer to the multiple choice question.
-     * @param player The player that is answering.
+     * @param player       The player that is answering.
      */
     public void judgeAnswer(String playerAnswer, Player player) {
         //This is trying to use the last index of the usedQuestions
-        if( filteredQuestions.get(usedQuestions.get(usedQuestions.size() - 1)).
-                verifyAnswer(playerAnswer)){
+        if (filteredQuestions.get(usedQuestions.get(usedQuestions.size() - 1)).
+                verifyAnswer(playerAnswer)) {
             player.setScore(player.getScore() + SCORE_CHANGE_VALUE);
             System.out.println("You got it right!!~!~~~ 10 points, you are at " + player.getScore());
-        } else{
+        } else {
             player.setScore(player.getScore() - SCORE_CHANGE_VALUE);
             System.out.println("You suck - 10 points, you are at " + player.getScore());
         }
@@ -68,25 +72,27 @@ public class Host {
 
     /**
      * This method lets the player know if they have won or lost
+     *
      * @param player
      */
     public void giveGameResult(Player player) {
-        if(player.getScore() >= 60){
+        if (player.getScore() >= 60) {
             System.out.println("You win!!!");
-        }else{
+        } else {
             System.out.println("you lose");
         }
     }
 
     /**
      * This method will return the appropriate category of questions the user has requested.
+     *
      * @param category the Enum category that will be the topic of questions asked
      * @return questionsByCategory a List of questions that are the selected category.
      */
-    public List<Question> getQuestionsByCategory(Category category){
+    public List<Question> getQuestionsByCategory(Category category) {
         List<Question> questionsByCategory = new ArrayList<>();
-        for(Question q: questions){
-            if(q.getCategory().equals(category)){
+        for (Question q : questions) {
+            if (q.getCategory().equals(category)) {
                 questionsByCategory.add(q);
             }
         }
@@ -102,12 +108,24 @@ public class Host {
         System.out.println("Enter y or n.");
         Scanner scan = new Scanner(System.in);
         String playerChoice = scan.nextLine();
-        if("y".equalsIgnoreCase(playerChoice)){
+        if ("y".equalsIgnoreCase(playerChoice)) {
             result = true;
-        }else{
+        } else {
             System.out.println("Thanks for playing! See you next time.");
         }
         return result;
 
+    }
+
+    public void setQuestions(List<Question> questions) {
+        this.questions = questions;
+    }
+
+    public void setFilteredQuestions(List<Question> filteredQuestions) {
+        this.filteredQuestions = filteredQuestions;
+    }
+
+    public void setUsedQuestions(List<Integer> usedQuestions) {
+        this.usedQuestions = usedQuestions;
     }
 }

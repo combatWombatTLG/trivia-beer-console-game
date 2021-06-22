@@ -20,9 +20,9 @@ public class Question {
 
 
     //BUSINESS METHODS
-    public boolean verifyAnswer(String answer){
+    public boolean verifyAnswer(String userChoice){
         boolean result = false;
-        if(correctAnswer.equals(choiceMap.get(answer))){
+        if(correctAnswer.equals(choiceMap.get(userChoice))){
             result = true;
         }
         return result;

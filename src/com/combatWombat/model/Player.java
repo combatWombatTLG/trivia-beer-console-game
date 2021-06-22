@@ -12,6 +12,14 @@ public class Player {
         this.score = score;
     }
 
+    /**
+     * TODO: non "ABCD" input needs to be handled
+     * assuuming Prompter prompter
+     * String userInput = prompter.prompt("Please enter your answer: A, B ,C , D", "[A-D][a-d]", "Please enter only A-D")
+     * regex argument
+     * overloadable prompter methods for non data validated and data validated
+     * only add zipped jar to project and fix the dependencies to use it
+     */
     public String answerQuestion(){
         String answer = "";
         Scanner scan = new Scanner(System.in);
@@ -20,8 +28,6 @@ public class Player {
     }
 
     //ACCESSOR METHODS
-
-
     public int getScore() {
         return score;
     }

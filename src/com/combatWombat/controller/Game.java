@@ -15,9 +15,16 @@ public class Game {
     private static final int SCORE_TO_WIN = 60;
     private static final int SCORE_TO_LOSE = 0;
     private static final int STARTING_SCORE = 30;
+    //private Prompter prompter;
+
+    public Game() {
+
+    }
 
 
-    public static void start() {
+
+    //change methods from static
+    public  void start() {
         BeerMug beerMug = new BeerMug();
         System.out.println("Welcome to console trivia!");
         System.out.println("Please enter your name below");
@@ -36,6 +43,8 @@ public class Game {
 
 
         //GAME LOGIC
+        //lets have the game class do the prompting then pass in that input to the methods that require it
+        //right click -> refactor -> extract method
         while (player.getScore() < SCORE_TO_WIN && player.getScore() > SCORE_TO_LOSE) {
             clearScreen();
 
@@ -52,7 +61,7 @@ public class Game {
         }
     }
 
-    private static void clearScreen() {
+    private  void clearScreen() {
         if (System.getProperty("os.name").contains("W")) {
             try {
                 Runtime.getRuntime().exec("cls");
