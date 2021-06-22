@@ -1,8 +1,6 @@
 <component name="libraryTable">
-  <library name="app-utils-1.0.3">
+  <library name="junit-4.13">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/lib/app-utils-1.0.3.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/hamcrest-core-1.3.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/junit-4.13.jar!/" />
     </CLASSES>
     <JAVADOC />
