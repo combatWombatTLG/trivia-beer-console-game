@@ -13,18 +13,18 @@ public class Player {
         this.score = score;
     }
 
+
     public String answerQuestion(Prompter prompter){
         String answer = prompter.prompt(
                 "Answer with A,B,C, or D \n",
                 "[A-D]|[a-d]",
                 "A,B,C or D ONLY");
 
+
         return answer;
     }
 
     //ACCESSOR METHODS
-
-
     public int getScore() {
         return score;
     }
