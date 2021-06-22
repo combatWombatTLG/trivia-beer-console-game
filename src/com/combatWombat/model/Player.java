@@ -1,7 +1,8 @@
 package com.combatWombat.model;
 
+import com.apps.util.Prompter;
+
 import java.util.Locale;
-import java.util.Scanner;
 
 public class Player {
     private String name;
@@ -12,18 +13,12 @@ public class Player {
         this.score = score;
     }
 
-    /**
-     * TODO: non "ABCD" input needs to be handled
-     * assuuming Prompter prompter
-     * String userInput = prompter.prompt("Please enter your answer: A, B ,C , D", "[A-D][a-d]", "Please enter only A-D")
-     * regex argument
-     * overloadable prompter methods for non data validated and data validated
-     * only add zipped jar to project and fix the dependencies to use it
-     */
-    public String answerQuestion(){
-        String answer = "";
-        Scanner scan = new Scanner(System.in);
-        answer = scan.nextLine().toUpperCase(Locale.ROOT);
+
+    public String answerQuestion(Prompter prompter){
+        String answer = prompter.prompt(
+                "Answer with A,B,C, or D \n",
+                "[A-D]|[a-d]",
+                "A,B,C or D ONLY");
         return answer;
     }
 
