@@ -1,20 +1,19 @@
 package com.combatWombat.controller;
 
-import com.combatWombat.model.BeerMug;
-
 import com.combatWombat.model.Category;
 import com.combatWombat.model.Host;
 import com.combatWombat.model.Player;
 
 import java.io.IOException;
-import java.util.Locale;
-import java.util.Random;
-import java.util.Scanner;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.*;
 
 public class Game {
     private static final int SCORE_TO_WIN = 60;
     private static final int SCORE_TO_LOSE = 0;
     private static final int STARTING_SCORE = 30;
+    private List<String> beerMugs;
     //private Prompter prompter;
 
     public Game() {
@@ -24,8 +23,9 @@ public class Game {
 
 
     //change methods from static
-    public  void start() {
-        BeerMug beerMug = new BeerMug();
+    public  void start()  {
+        beerMugs = setupBeerMugs();
+        //BeerMug beerMug = new BeerMug();
         System.out.println("Welcome to console trivia!");
         System.out.println("Please enter your name below");
         Scanner scan = new Scanner(System.in);
@@ -46,9 +46,13 @@ public class Game {
         //lets have the game class do the prompting then pass in that input to the methods that require it
         //right click -> refactor -> extract method
         while (player.getScore() < SCORE_TO_WIN && player.getScore() > SCORE_TO_LOSE) {
-            clearScreen();
+            try{
+                clearScreen();
+            }catch (IOException e){
 
-            beerMug.drawBeer(player.getScore());
+            }
+
+            System.out.println(beerMugs.get(player.getScore()/10));
             host.askQuestion();
             host.judgeAnswer(player.answerQuestion(), player);
 
@@ -61,20 +65,31 @@ public class Game {
         }
     }
 
-    private  void clearScreen() {
-        if (System.getProperty("os.name").contains("W")) {
-            try {
-                Runtime.getRuntime().exec("cls");
-            } catch (IOException e) {
 
-            }
-        } else {
-            try {
-                Runtime.getRuntime().exec("clear");
-            } catch (IOException e) {
+
+    private List<String> setupBeerMugs() {
+        beerMugs = new ArrayList<>();
+        for(int i = 0; i < 7; i++){
+            try{
+                beerMugs.add(Files.readString(Path.of("data/beer" + i*10 + ".txt")));
+            }catch (IOException e){
 
             }
         }
+        return beerMugs;
     }
+
+
+public static void clearScreen() throws IOException{
+        String os = System.getProperty("os.name").toLowerCase();
+    ProcessBuilder process = (os.contains("windows")) ?
+            new ProcessBuilder("cmd", "/c", "cls") :
+            new ProcessBuilder("clear");
+    try {
+        process.inheritIO().start().waitFor();
+    }
+    catch ( InterruptedException ignored) {
+    }
+}
 
 }
