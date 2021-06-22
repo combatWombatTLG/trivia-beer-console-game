@@ -70,12 +70,12 @@ public class BeerMug {
     private List<String> setPaths(){
         paths = new ArrayList<>();
         paths.add("data/beer0.txt");
+        paths.add("data/beer0.txt");
         paths.add("data/beer10.txt");
         paths.add("data/beer20.txt");
         paths.add("data/beer30.txt");
         paths.add("data/beer40.txt");
         paths.add("data/beer50.txt");
-        paths.add("data/beer60.txt");
         return paths;
     }
 }
