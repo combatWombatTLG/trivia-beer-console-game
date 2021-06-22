@@ -39,12 +39,14 @@ public class Host {
         System.out.println(filteredQuestions.get(questionIndex).getQuestionText());
         System.out.println();
         String choiceChars = "ABCD";
+
+
         for(int i = 0; i < choiceChars.length(); i++){
             System.out.print(choiceChars.charAt(i) +
                     ") " +filteredQuestions.get(questionIndex).getAnswerChoices().get(i));
             System.out.println();
         }
-
+        //private helper method
     }
 
     /**

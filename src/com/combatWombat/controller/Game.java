@@ -52,6 +52,10 @@ public class Game {
         }
     }
 
+    /**
+     * This method should clear the command prompt screen, regardless of MacOs, or Windows
+     * operating system.
+     */
     private static void clearScreen() {
         if (System.getProperty("os.name").contains("W")) {
             try {
