@@ -1,7 +1,8 @@
 package com.combatWombat.model;
 
+import com.apps.util.Prompter;
+
 import java.util.Locale;
-import java.util.Scanner;
 
 public class Player {
     private String name;
@@ -12,10 +13,12 @@ public class Player {
         this.score = score;
     }
 
-    public String answerQuestion(){
-        String answer = "";
-        Scanner scan = new Scanner(System.in);
-        answer = scan.nextLine().toUpperCase(Locale.ROOT);
+    public String answerQuestion(Prompter prompter){
+        String answer = prompter.prompt(
+                "Answer with A,B,C, or D \n",
+                "[A-D]|[a-d]",
+                "A,B,C or D ONLY");
+
         return answer;
     }
 

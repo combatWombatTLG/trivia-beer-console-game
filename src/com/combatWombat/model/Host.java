@@ -1,5 +1,7 @@
 package com.combatWombat.model;
 
+import com.apps.util.Prompter;
+
 import java.io.IOException;
 import java.util.*;
 
@@ -35,7 +37,7 @@ public class Host {
         }
         //make own private helper method^^^^^
 
-        System.out.println("Answer the following with A,B,C, or D");
+        System.out.println("Question: ");
         System.out.println(filteredQuestions.get(questionIndex).getQuestionText());
         System.out.println();
         String choiceChars = "ABCD";
@@ -96,12 +98,12 @@ public class Host {
     /**
      * This allows the user to re pick their category, and it resets their score back to the middle.
      */
-    public boolean newGame() {
+    public boolean newGame(Prompter prompter) {
         boolean result = false;
-        System.out.println("Would you like to play another game?");
-        System.out.println("Enter y or n.");
-        Scanner scan = new Scanner(System.in);
-        String playerChoice = scan.nextLine();
+        String playerChoice = prompter.prompt(
+                "Would you like to play another game? y or n \n",
+                "Y|N|y|n",
+                "y or n ONLY");
         if("y".equalsIgnoreCase(playerChoice)){
             result = true;
         }else{
