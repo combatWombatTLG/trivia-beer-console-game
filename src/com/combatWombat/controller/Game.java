@@ -4,7 +4,6 @@ package com.combatWombat.controller;
 import com.apps.util.Prompter;
 
 
-
 import com.combatWombat.model.Category;
 import com.combatWombat.model.Host;
 import com.combatWombat.model.Player;
@@ -16,7 +15,6 @@ import java.nio.file.Path;
 import java.util.*;
 
 import java.util.Locale;
-import java.util.Random;
 
 
 public class Game {
@@ -31,66 +29,38 @@ public class Game {
     public Game() {
 
     }
+
     public Game(Prompter prompter) {
         this.prompter = prompter;
     }
 
 
-    //change methods from static
-    public  void start() {
+    /**
+     * This method will initialize the game objects and commence the game loop.
+     */
+    public void start() {
         banner = setBanner();
         beerMugs = setupBeerMugs();
-
         System.out.println(banner);
         Player player = getPlayer();
         Host host = getHost();
-
-
-        //GAME LOGIC
-        //lets have the game class do the prompting then pass in that input to the methods that require it
-        //right click -> refactor -> extract method
-
         while (player.getScore() < SCORE_TO_WIN && player.getScore() > SCORE_TO_LOSE) {
             try {
                 clearScreen();
-            } catch (IOException e) {
+            } catch (IOException ignored) {
 
             }
-
             System.out.println(beerMugs.get(player.getScore() / 10));
             host.askQuestion();
             host.judgeAnswer(player.answerQuestion(prompter), player);
-
-            if (player.getScore() == 60 || player.getScore() == 0) {
-                host.giveGameResult(player);
-                if (host.newGame(prompter)) {
-                    player.setScore(STARTING_SCORE);
-                }
-            }
+            askForNewGame(player, host);
         }
     }
 
 
 
-    public  Host getHost () {
-        String stringCategory = prompter.prompt(
-                "Please choose a category : Sports, Entertainment or Science \n",
-                "Sports|Entertainment|Science|sports|entertainment|science",
-                "Sports, Entertainment or Science ONLY"
-        );
-        Category questionCategory = Category.valueOf(stringCategory.toUpperCase(Locale.ROOT));
-        Host host = new Host(questionCategory);
-        return host;
-    }
-
-    public Player getPlayer () {
-        String userName = prompter.prompt("Please enter your name below \n");
-        Player player = new Player(userName, STARTING_SCORE);
-        return player;
-    }
-
-
-    public List<String> setupBeerMugs () {
+    //ACCESSORS
+    public List<String> setupBeerMugs() {
         beerMugs = new ArrayList<>();
         for (int i = 0; i < 7; i++) {
             try {
@@ -101,17 +71,43 @@ public class Game {
         }
         return beerMugs;
     }
+
     public String setBanner() {
         try {
-          banner = Files.readString(Path.of("data/banner.txt"));
+            banner = Files.readString(Path.of("data/banner.txt"));
         } catch (IOException e) {
 
         }
         return banner;
     }
 
+    public Host getHost() {
+        String stringCategory = prompter.prompt(
+                "Please choose a category : Sports, Entertainment or Science \n",
+                "Sports|Entertainment|Science|sports|entertainment|science",
+                "Sports, Entertainment or Science ONLY"
+        );
+        Category questionCategory = Category.valueOf(stringCategory.toUpperCase(Locale.ROOT));
+        Host host = new Host(questionCategory);
+        return host;
+    }
 
-    public static void clearScreen () throws IOException {
+    public Player getPlayer() {
+        String userName = prompter.prompt("Please enter your name below \n");
+        Player player = new Player(userName, STARTING_SCORE);
+        return player;
+    }
+
+    //PRIVATE HELPER
+    private void askForNewGame(Player player, Host host) {
+        if (player.getScore() == 60 || player.getScore() == 0) {
+            host.giveGameResult(player);
+            if (host.newGame(prompter)) {
+                player.setScore(STARTING_SCORE);
+            }
+        }
+    }
+    private void clearScreen() throws IOException {
         String os = System.getProperty("os.name").toLowerCase();
         ProcessBuilder process = (os.contains("windows")) ?
                 new ProcessBuilder("cmd", "/c", "cls") :

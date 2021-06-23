@@ -37,19 +37,11 @@ public class Host {
         formatQuestionText(questionIndex);
     }
 
-    private void formatQuestionText(Integer questionIndex) {
-        System.out.println("Question: ");
-        System.out.println(filteredQuestions.get(questionIndex).getQuestionText());
-        System.out.println();
-        String choiceChars = "ABCD";
-        for (int i = 0; i < choiceChars.length(); i++) {
-            System.out.print(choiceChars.charAt(i) +
-                    ") " + filteredQuestions.get(questionIndex).getAnswerChoices().get(i));
-            System.out.println();
-        }
-    }
 
-
+    /**
+     * This method gets an index of an unused question from the question list.
+     * @return Integer the number of the index.
+     */
     public Integer getQuestionIndex() {
         Random rand = new Random();
         Integer questionIndex = Integer.valueOf(rand.nextInt(RANDOM_INTEGER_BOUND));
@@ -83,7 +75,7 @@ public class Host {
     /**
      * This method lets the player know if they have won or lost
      *
-     * @param player
+     * @param player the current player of the game.
      */
     public void giveGameResult(Player player) {
         if (player.getScore() >= 60) {
@@ -92,6 +84,39 @@ public class Host {
             System.out.println(setUpBanner("data/loser.txt"));
         }
     }
+
+    /**
+     * This allows the user to re pick their category, and it resets their score back to the middle.
+     */
+    public boolean newGame(Prompter prompter) {
+        boolean result = false;
+
+        String playerChoice = prompter.prompt(
+                "Would you like to play another game? y or n \n",
+                "Y|N|y|n",
+                "y or n ONLY");
+        if ("y".equalsIgnoreCase(playerChoice)) {
+            result = true;
+        } else {
+            System.out.println("Thanks for playing! See you next time.");
+        }
+        return result;
+
+    }
+
+    //PRIVATE HELPERS
+    private void formatQuestionText(Integer questionIndex) {
+        System.out.println("Question: ");
+        System.out.println(filteredQuestions.get(questionIndex).getQuestionText());
+        System.out.println();
+        String choiceChars = "ABCD";
+        for (int i = 0; i < choiceChars.length(); i++) {
+            System.out.print(choiceChars.charAt(i) +
+                    ") " + filteredQuestions.get(questionIndex).getAnswerChoices().get(i));
+            System.out.println();
+        }
+    }
+    //ACCESSORS
 
     /**
      * This method will return the appropriate category of questions the user has requested.
@@ -118,27 +143,6 @@ public class Host {
         }
         return reader;
     }
-
-
-    /**
-     * This allows the user to re pick their category, and it resets their score back to the middle.
-     */
-    public boolean newGame(Prompter prompter) {
-        boolean result = false;
-
-        String playerChoice = prompter.prompt(
-                "Would you like to play another game? y or n \n",
-                "Y|N|y|n",
-                "y or n ONLY");
-        if ("y".equalsIgnoreCase(playerChoice)) {
-            result = true;
-        } else {
-            System.out.println("Thanks for playing! See you next time.");
-        }
-        return result;
-
-    }
-
     public Category getCategory() {
         return category;
     }
