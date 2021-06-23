@@ -103,7 +103,9 @@ public class Game {
     private void askForNewGame(Player player, Host host) {
         if (player.getScore() == 60 || player.getScore() == 0) {
             host.giveGameResult(player);
+            System.out.println(beerMugs.get(beerMugs.size() -1));
             if (host.newGame(prompter)) {
+
                 player.setScore(STARTING_SCORE);
             }
         }
