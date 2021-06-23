@@ -17,6 +17,7 @@ public class Host {
     private List<Integer> usedQuestions;
     private Category category;
 
+
     public Host(Category category) {
         try {
             this.questions = new QuestionLoader("data/Question-Data.csv").load();
@@ -26,6 +27,7 @@ public class Host {
         this.usedQuestions = new ArrayList<>();
         this.filteredQuestions = getQuestionsByCategory(category);
         this.category = category;
+
     }
 
     /**
@@ -61,14 +63,18 @@ public class Host {
      */
     public void judgeAnswer(String playerAnswer, Player player) {
         //This is trying to use the last index of the usedQuestions
-        if (filteredQuestions.get(usedQuestions.get(usedQuestions.size() - 1)).
-                verifyAnswer(playerAnswer)) {
-            player.setScore(player.getScore() + SCORE_CHANGE_VALUE);
-              System.out.println("right banner goes here");
-        } else {
-            player.setScore(player.getScore() - SCORE_CHANGE_VALUE);
-             System.out.println("wrong banner goes here");
-        }
+
+            if (filteredQuestions.get(usedQuestions.get(usedQuestions.size() - 1)).
+                    verifyAnswer(playerAnswer)) {
+                player.setScore(player.getScore() + SCORE_CHANGE_VALUE);
+
+                System.out.println("CORRECT!");
+            } else {
+                player.setScore(player.getScore() - SCORE_CHANGE_VALUE);
+                System.out.println("INCORRECT!");
+            }
+
+
 
     }
 

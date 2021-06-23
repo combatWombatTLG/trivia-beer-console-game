@@ -24,7 +24,8 @@ public class Game {
     private static Prompter prompter;
     private List<String> beerMugs;
     private String banner;
-
+    private Player player;
+    private Host host;
 
     public Game() {
 
@@ -42,8 +43,8 @@ public class Game {
         banner = setBanner();
         beerMugs = setupBeerMugs();
         System.out.println(banner);
-        Player player = getPlayer();
-        Host host = getHost();
+        player = getPlayer();
+        host = getHost();
         while (player.getScore() < SCORE_TO_WIN && player.getScore() > SCORE_TO_LOSE) {
             try {
                 clearScreen();
