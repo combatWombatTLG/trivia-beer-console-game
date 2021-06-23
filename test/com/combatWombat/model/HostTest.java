@@ -15,7 +15,7 @@ public class HostTest {
     private Host host;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp()  {
         host = new Host(Category.SPORTS);
     }
 

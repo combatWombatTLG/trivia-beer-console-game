@@ -6,6 +6,7 @@ import com.apps.util.Prompter;
 
 
 import com.combatWombat.model.Category;
+import com.combatWombat.model.Colors;
 import com.combatWombat.model.Host;
 import com.combatWombat.model.Player;
 
@@ -73,10 +74,13 @@ public class Game {
 
 
     public  Host getHost () {
+
         String stringCategory = prompter.prompt(
-                "Please choose a category : Sports, Entertainment or Science \n",
-                "Sports|Entertainment|Science|sports|entertainment|science",
-                "Sports, Entertainment or Science ONLY"
+                Colors.BLUE +
+                "Please choose a category : Sports, Entertainment or Science \n" + Colors.RESET,
+                "Sports|Entertainment|Science|sports|entertainment|science"
+                ,
+                Colors.RED_BOLD + "Sports, Entertainment or Science ONLY" + Colors.RESET
         );
         Category questionCategory = Category.valueOf(stringCategory.toUpperCase(Locale.ROOT));
         Host host = new Host(questionCategory);
@@ -84,7 +88,7 @@ public class Game {
     }
 
     public Player getPlayer () {
-        String userName = prompter.prompt("Please enter your name below \n");
+        String userName = prompter.prompt(Colors.BLUE + "Please enter your name below \n" + Colors.RESET);
         Player player = new Player(userName, STARTING_SCORE);
         return player;
     }
@@ -94,7 +98,7 @@ public class Game {
         beerMugs = new ArrayList<>();
         for (int i = 0; i < 7; i++) {
             try {
-                beerMugs.add(Files.readString(Path.of("data/beer" + i * 10 + ".txt")));
+                beerMugs.add(Colors.YELLOW + Files.readString(Path.of("data/beer" + i * 10 + ".txt")) + Colors.RESET);
             } catch (IOException e) {
 
             }
@@ -103,7 +107,7 @@ public class Game {
     }
     public String setBanner() {
         try {
-          banner = Files.readString(Path.of("data/banner.txt"));
+          banner =  Colors.YELLOW + Files.readString(Path.of("data/banner.txt")) + Colors.RESET;
         } catch (IOException e) {
 
         }

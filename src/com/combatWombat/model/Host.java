@@ -38,13 +38,13 @@ public class Host {
     }
 
     private void formatQuestionText(Integer questionIndex) {
-        System.out.println("Question: ");
-        System.out.println(filteredQuestions.get(questionIndex).getQuestionText());
+        System.out.println(Colors.BLUE_BRIGHT + "Question: " + Colors.RESET);
+        System.out.println(Colors.BLUE_BRIGHT + filteredQuestions.get(questionIndex).getQuestionText() + Colors.RESET);
         System.out.println();
         String choiceChars = "ABCD";
         for (int i = 0; i < choiceChars.length(); i++) {
-            System.out.print(choiceChars.charAt(i) +
-                    ") " + filteredQuestions.get(questionIndex).getAnswerChoices().get(i));
+            System.out.print(Colors.BLUE_BRIGHT + choiceChars.charAt(i) +
+                    ") " + filteredQuestions.get(questionIndex).getAnswerChoices().get(i) + Colors.RESET);
             System.out.println();
         }
     }
@@ -87,9 +87,9 @@ public class Host {
      */
     public void giveGameResult(Player player) {
         if (player.getScore() >= 60) {
-            System.out.println(setUpBanner("data/winner.txt"));
+            System.out.println(Colors.PURPLE_BRIGHT + setUpBanner("data/winner.txt") + Colors.RESET);
         } else {
-            System.out.println(setUpBanner("data/loser.txt"));
+            System.out.println(setUpBanner(Colors.RED_BRIGHT + "data/loser.txt") + Colors.RESET);
         }
     }
 

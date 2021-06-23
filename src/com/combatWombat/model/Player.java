@@ -17,9 +17,9 @@ public class Player {
 
     public String answerQuestion(Prompter prompter){
         String answer = prompter.prompt(
-                "Answer with A,B,C, or D \n",
+                Colors.BLUE_BRIGHT + "Answer with A,B,C, or D \n" + Colors.RESET,
                 "[A-D]|[a-d]",
-                "A,B,C or D ONLY");
+                Colors.RED_BOLD + "A,B,C or D ONLY" + Colors.RESET);
 
         return answer;
     }
