@@ -103,7 +103,17 @@ public class Game {
         if (player.getScore() == 60 || player.getScore() == 0) {
             if (player.getScore() == 60) {
                 System.out.println(beerMugs.get(beerMugs.size() - 1));
+                try{
+                    clearScreen();
+                }catch (IOException ignored){
+
+                }
             }else{
+                try{
+                    clearScreen();
+                }catch (IOException ignored){
+
+                }
                 System.out.println(beerMugs.get(0));
             }
 
