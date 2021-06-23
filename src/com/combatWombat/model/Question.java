@@ -9,6 +9,9 @@ public class Question {
     private String correctAnswer;
     private Category category;
     private List<String> answerChoices;
+
+
+
     private Map<String,String> choiceMap;
 
     public Question(String questionText, String correctAnswer, Category category,List<String> answerChoices) {
@@ -32,6 +35,9 @@ public class Question {
     //ACCESSOR METHODS
     public String getQuestionText() {
         return questionText;
+    }
+    public Map<String, String> getChoiceMap() {
+        return choiceMap;
     }
 
     public Category getCategory() {
