@@ -11,7 +11,7 @@ import java.util.Random;
 
 public class Host {
     private static final int SCORE_CHANGE_VALUE = 10;
-    private static final int RANDOM_INTEGER_BOUND = 10;
+    private static final int RANDOM_INTEGER_BOUND = 20;
     private List<Question> questions;//probably try catch in the constructor
     private List<Question> filteredQuestions;
     private List<Integer> usedQuestions;
@@ -72,10 +72,10 @@ public class Host {
         if (filteredQuestions.get(usedQuestions.get(usedQuestions.size() - 1)).
                 verifyAnswer(playerAnswer)) {
             player.setScore(player.getScore() + SCORE_CHANGE_VALUE);
-              System.out.println("You got it right!~!~!~!~!~~! you have " + player.getScore()/10 + " sips left to finish you're drink!");
+              System.out.println("right banner goes here");
         } else {
             player.setScore(player.getScore() - SCORE_CHANGE_VALUE);
-             System.out.println("You got it wrong :( , you have  " + player.getScore()/10 + " sips left to finish you're drink!");
+             System.out.println("wrong banner goes here");
         }
 
     }
