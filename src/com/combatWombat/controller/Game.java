@@ -59,7 +59,6 @@ public class Game {
     }
 
 
-
     //ACCESSORS
     public List<String> setupBeerMugs() {
         beerMugs = new ArrayList<>();
@@ -102,14 +101,21 @@ public class Game {
     //PRIVATE HELPER
     private void askForNewGame(Player player, Host host) {
         if (player.getScore() == 60 || player.getScore() == 0) {
+            if (player.getScore() == 60) {
+                System.out.println(beerMugs.get(beerMugs.size() - 1));
+            }else{
+                System.out.println(beerMugs.get(0));
+            }
+
             host.giveGameResult(player);
-            System.out.println(beerMugs.get(beerMugs.size() -1));
+
             if (host.newGame(prompter)) {
 
                 player.setScore(STARTING_SCORE);
             }
         }
     }
+
     private void clearScreen() throws IOException {
         String os = System.getProperty("os.name").toLowerCase();
         ProcessBuilder process = (os.contains("windows")) ?

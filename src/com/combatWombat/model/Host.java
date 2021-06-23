@@ -7,6 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 
 public class Host {
@@ -102,6 +103,12 @@ public class Host {
                 "Y|N|y|n",
                 "y or n ONLY");
         if ("y".equalsIgnoreCase(playerChoice)) {
+            String stringCategory = prompter.prompt(
+                    "Please choose a category : Sports, Entertainment or Science \n",
+                    "Sports|Entertainment|Science|sports|entertainment|science",
+                    "Sports, Entertainment or Science ONLY"
+            );
+            questions = getQuestionsByCategory(Category.valueOf(stringCategory.toUpperCase(Locale.ROOT)));
             result = true;
         } else {
             System.out.println("Thanks for playing! See you next time.");
@@ -167,5 +174,8 @@ public class Host {
 
     public static int getRandomIntegerBound() {
         return RANDOM_INTEGER_BOUND;
+    }
+    public void setCategory(Category category) {
+        this.category = category;
     }
 }
