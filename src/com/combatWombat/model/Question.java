@@ -22,7 +22,7 @@ public class Question {
     //BUSINESS METHODS
     public boolean verifyAnswer(String answer){
         boolean result = false;
-        if(correctAnswer.equals(choiceMap.get(answer))){
+        if(correctAnswer.equals(choiceMap.get(answer.toUpperCase()))){
             result = true;
         }
         return result;

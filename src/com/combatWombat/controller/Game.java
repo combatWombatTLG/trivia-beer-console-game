@@ -25,6 +25,7 @@ public class Game {
     private static final int STARTING_SCORE = 30;
     private static Prompter prompter;
     private List<String> beerMugs;
+    private String banner;
 
 
     public Game() {
@@ -37,8 +38,10 @@ public class Game {
 
     //change methods from static
     public  void start() {
+        banner = setBanner();
         beerMugs = setupBeerMugs();
 
+        System.out.println(banner);
         Player player = getPlayer();
         Host host = getHost();
 
@@ -46,6 +49,7 @@ public class Game {
         //GAME LOGIC
         //lets have the game class do the prompting then pass in that input to the methods that require it
         //right click -> refactor -> extract method
+
         while (player.getScore() < SCORE_TO_WIN && player.getScore() > SCORE_TO_LOSE) {
             try {
                 clearScreen();
@@ -68,7 +72,7 @@ public class Game {
 
 
 
-    private static Host getHost () {
+    public  Host getHost () {
         String stringCategory = prompter.prompt(
                 "Please choose a category : Sports, Entertainment or Science \n",
                 "Sports|Entertainment|Science|sports|entertainment|science",
@@ -79,7 +83,7 @@ public class Game {
         return host;
     }
 
-    private static Player getPlayer () {
+    public Player getPlayer () {
         String userName = prompter.prompt("Please enter your name below \n");
         Player player = new Player(userName, STARTING_SCORE);
         return player;
@@ -97,6 +101,14 @@ public class Game {
         }
         return beerMugs;
     }
+    public String setBanner() {
+        try {
+          banner = Files.readString(Path.of("data/banner.txt"));
+        } catch (IOException e) {
+
+        }
+        return banner;
+    }
 
 
     public static void clearScreen () throws IOException {
@@ -109,10 +121,4 @@ public class Game {
         } catch (InterruptedException ignored) {
         }
     }
-
-    public Prompter getPrompter () {
-        return prompter;
-    }
-
-
 }
