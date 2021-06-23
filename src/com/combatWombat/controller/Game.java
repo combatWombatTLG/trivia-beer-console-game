@@ -111,7 +111,7 @@ public class Game {
 
             if (host.newGame(prompter)) {
 
-                player.setScore(STARTING_SCORE);
+                start();
             }
         }
     }
