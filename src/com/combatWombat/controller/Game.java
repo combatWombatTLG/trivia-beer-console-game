@@ -102,8 +102,18 @@ public class Game {
     private void askForNewGame(Player player, Host host) {
         if (player.getScore() == 60 || player.getScore() == 0) {
             if (player.getScore() == 60) {
+                try{
+                    clearScreen();
+                }catch (IOException ignored){
+
+                }
                 System.out.println(beerMugs.get(beerMugs.size() - 1));
             }else{
+                try{
+                    clearScreen();
+                }catch (IOException ignored){
+
+                }
                 System.out.println(beerMugs.get(0));
             }
 
