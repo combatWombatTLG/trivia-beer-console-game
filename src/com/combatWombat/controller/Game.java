@@ -1,71 +1,155 @@
 package com.combatWombat.controller;
 
-import com.combatWombat.model.BeerMug;
+
+import com.combatWombat.model.Prompter;
+
 
 import com.combatWombat.model.Category;
 import com.combatWombat.model.Host;
 import com.combatWombat.model.Player;
 
 import java.io.IOException;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.*;
+
 import java.util.Locale;
-import java.util.Random;
-import java.util.Scanner;
+
 
 public class Game {
     private static final int SCORE_TO_WIN = 60;
     private static final int SCORE_TO_LOSE = 0;
     private static final int STARTING_SCORE = 30;
+    private static final int QUESTION_ROUND = 10;
+    private static Prompter prompter;
+    private List<String> beerMugs;
+    private String banner;
+    private Player player;
+    private Host host;
+
+    public Game() {
+
+    }
+
+    public Game(Prompter prompter) {
+        this.prompter = prompter;
+    }
 
 
-    public static void start() {
-        BeerMug beerMug = new BeerMug();
-        System.out.println("Welcome to console trivia!");
-        System.out.println("Please enter your name below");
-        Scanner scan = new Scanner(System.in);
-        String userName = scan.nextLine();
+    /**
+     * This method will initialize the game objects and commence the game loop.
+     */
+    public void start() {
+        banner = setBanner();
+        beerMugs = setupBeerMugs();
+        System.out.println(banner);
+        player = getPlayer();
+        host = getHost();
+        while (player.getScore() < SCORE_TO_WIN && player.getScore() > SCORE_TO_LOSE) {
+            try {
+                clearScreen();
+            } catch (IOException ignored) {
 
-        //instantiate player object
-        Player player = new Player(userName, STARTING_SCORE);
+            }
+            System.out.println(beerMugs.get(player.getScore() / 10));
+            host.askQuestion();
+            host.judgeAnswer(player.answerQuestion(prompter), player);
+            try {
+                clearScreen();
+            } catch (IOException ignored) {
+
+            }
+            askForNewGame(player, host);
+        }
+    }
 
 
-        //instantiate the host object
-        System.out.println("Please choose a category : Sports or Movies");
-        String stringCategory = scan.nextLine();
+    //ACCESSORS
+    public List<String> setupBeerMugs() {
+        beerMugs = new ArrayList<>();
+        for (int i = 0; i < 7; i++) {
+            try {
+                beerMugs.add(Files.readString(Path.of("data/beer" + i * 10 + ".txt")));
+            } catch (IOException e) {
+
+            }
+        }
+        return beerMugs;
+    }
+
+    public String setBanner() {
+        try {
+            banner = Files.readString(Path.of("data/banner.txt"));
+        } catch (IOException e) {
+
+        }
+        return banner;
+    }
+
+    public Host getHost() {
+        String stringCategory = prompter.prompt(
+                "Please choose a category : Sports, Entertainment or Science \n",
+                "Sports|Entertainment|Science|sports|entertainment|science",
+                "Sports, Entertainment or Science ONLY"
+        );
         Category questionCategory = Category.valueOf(stringCategory.toUpperCase(Locale.ROOT));
         Host host = new Host(questionCategory);
+        return host;
+    }
 
+    public Player getPlayer() {
+        String userName = prompter.prompt("Please enter your name below \n");
+        Player player = new Player(userName, STARTING_SCORE);
+        return player;
+    }
 
-        //GAME LOGIC
-        while (player.getScore() < SCORE_TO_WIN && player.getScore() > SCORE_TO_LOSE) {
-            clearScreen();
+    public int getQuestionRound() {
+        return QUESTION_ROUND;
+    }
 
-            beerMug.drawBeer(player.getScore());
-            host.askQuestion();
-            host.judgeAnswer(player.answerQuestion(), player);
-
-            if (player.getScore() == 60 || player.getScore() == 0) {
-                host.giveGameResult(player);
-                if (host.newGame()) {
-                    player.setScore(STARTING_SCORE);
+    //PRIVATE HELPER
+    private void askForNewGame(Player player, Host host) {
+        if (player.getScore() == 60 || player.getScore() == 0 || host.getUsedQuestions().size() == this.getQuestionRound()) {
+            if (player.getScore() == 60) {
+                try{
+                    clearScreen();
+                }catch (IOException ignored){
                 }
+                System.out.println(beerMugs.get((player.getScore())/10));
+            }else if(player.getScore() == 0) {
+                try {
+                    clearScreen();
+                }catch (IOException ignored){
+                }
+                System.out.println(beerMugs.get(0));
+            }else {
+                try {
+                    clearScreen();
+                }catch (IOException ignored){
+                }
+                System.out.println(beerMugs.get((player.getScore())/10));
+            }
+            host.giveGameResult(player);
+            if (host.newGame(prompter)) {
+                try {
+                    clearScreen();
+                }catch (IOException ignored){
+
+                }
+                start();
             }
         }
     }
 
-    private static void clearScreen() {
-        if (System.getProperty("os.name").contains("W")) {
-            try {
-                Runtime.getRuntime().exec("cls");
-            } catch (IOException e) {
-
-            }
-        } else {
-            try {
-                Runtime.getRuntime().exec("clear");
-            } catch (IOException e) {
-
-            }
+    private void clearScreen() throws IOException {
+        String os = System.getProperty("os.name").toLowerCase();
+        ProcessBuilder process = (os.contains("windows")) ?
+                new ProcessBuilder("cmd", "/c", "cls") :
+                new ProcessBuilder("clear");
+        try {
+            process.inheritIO().start().waitFor();
+        } catch (InterruptedException ignored) {
         }
     }
-
 }
