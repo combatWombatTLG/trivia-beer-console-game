@@ -22,11 +22,11 @@
   |    |.-------------------.._                           └─┘┴ ┴┴ ┴└─┘  ┴└─└─┘┴─┘└─┘└─┘
   |    ||       |'|         || `--._                   ------------------------------------
   |    || _..--'|:|'--.._   ||      `-._
-  |    |||'--..____..--'|   |[]        ||               1.
-  |    |||              |   ||         ||               2.
-  |    |||              |   ||         ||               3.
-  |    ||]'--..____..--'[   ||         ||               4.
-  |    |||              |   ||         ||
+  |    |||'--..____..--'|   |[]        ||               1. You start the game with half a beer
+  |    |||              |   ||         ||               2. If you answer correctly you get more beer !!!!!
+  |    |||              |   ||         ||               3. If you answer wrong we take your beer !!!!!
+  |    ||]'--..____..--'[   ||         ||               4. You have ten questions per category to try on
+  |    |||              |   ||         ||               5. Try your best to get a free beer, GOOD LUCK !!!!!
   |    |L|              |   ||         ||
   |    |||              |   ||         J|
   |    ||]'--..____..--'[   ||         ||
