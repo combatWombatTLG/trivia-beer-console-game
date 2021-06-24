@@ -1,7 +1,7 @@
 package com.combatWombat.controller;
 
 
-import com.apps.util.Prompter;
+import com.combatWombat.model.Prompter;
 
 
 import com.combatWombat.model.Category;
@@ -21,6 +21,7 @@ public class Game {
     private static final int SCORE_TO_WIN = 60;
     private static final int SCORE_TO_LOSE = 0;
     private static final int STARTING_SCORE = 30;
+    private static final int QUESTION_ROUND = 10;
     private static Prompter prompter;
     private List<String> beerMugs;
     private String banner;
@@ -54,6 +55,11 @@ public class Game {
             System.out.println(beerMugs.get(player.getScore() / 10));
             host.askQuestion();
             host.judgeAnswer(player.answerQuestion(prompter), player);
+            try {
+                clearScreen();
+            } catch (IOException ignored) {
+
+            }
             askForNewGame(player, host);
         }
     }
@@ -98,29 +104,39 @@ public class Game {
         return player;
     }
 
+    public int getQuestionRound() {
+        return QUESTION_ROUND;
+    }
+
     //PRIVATE HELPER
     private void askForNewGame(Player player, Host host) {
-        if (player.getScore() == 60 || player.getScore() == 0) {
+        if (player.getScore() == 60 || player.getScore() == 0 || host.getUsedQuestions().size() == this.getQuestionRound()) {
             if (player.getScore() == 60) {
-                System.out.println(beerMugs.get(beerMugs.size() - 1));
                 try{
                     clearScreen();
                 }catch (IOException ignored){
-
                 }
-            }else{
-                try{
+                System.out.println(beerMugs.get((player.getScore())/10));
+            }else if(player.getScore() == 0) {
+                try {
                     clearScreen();
                 }catch (IOException ignored){
-
                 }
                 System.out.println(beerMugs.get(0));
+            }else {
+                try {
+                    clearScreen();
+                }catch (IOException ignored){
+                }
+                System.out.println(beerMugs.get((player.getScore())/10));
             }
-
             host.giveGameResult(player);
-
             if (host.newGame(prompter)) {
+                try {
+                    clearScreen();
+                }catch (IOException ignored){
 
+                }
                 start();
             }
         }

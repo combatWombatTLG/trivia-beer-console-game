@@ -1,6 +1,6 @@
 package com.combatWombat.controller;
 
-import com.apps.util.Prompter;
+import com.combatWombat.model.Prompter;
 import com.combatWombat.model.Host;
 import com.combatWombat.model.Player;
 import org.junit.Before;

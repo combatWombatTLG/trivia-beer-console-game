@@ -1,9 +1,5 @@
 package com.combatWombat.model;
 
-import com.apps.util.Prompter;
-
-import java.util.Locale;
-
 public class Player {
     private String name;
     private int score;

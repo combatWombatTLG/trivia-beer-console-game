@@ -1,6 +1,6 @@
 package com.combatWombat.view;
 
-import com.apps.util.Prompter;
+import com.combatWombat.model.Prompter;
 import com.combatWombat.controller.Game;
 
 import java.util.Scanner;

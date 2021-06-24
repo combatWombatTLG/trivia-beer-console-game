@@ -1,4 +1,4 @@
-package com.apps.util;
+package com.combatWombat.model;
 
 import java.util.Scanner;
 

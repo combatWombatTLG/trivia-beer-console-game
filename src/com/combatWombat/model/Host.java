@@ -1,13 +1,10 @@
 package com.combatWombat.model;
 
-import com.apps.util.Prompter;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Random;
 
 public class Host {
@@ -87,8 +84,10 @@ public class Host {
     public void giveGameResult(Player player) {
         if (player.getScore() >= 60) {
             System.out.println(setUpBanner("data/winner.txt"));
-        } else {
+        } else if (player.getScore() <= 0){
             System.out.println(setUpBanner("data/loser.txt"));
+        } else {
+            System.out.println(setUpBanner("data/runout.txt"));
         }
     }
 

@@ -1,11 +1,8 @@
 package com.combatWombat.model;
 
-import com.apps.util.Prompter;
-import com.combatWombat.controller.Game;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.File;
 import java.util.*;
 import java.util.stream.Collectors;
 

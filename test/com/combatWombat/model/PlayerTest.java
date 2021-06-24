@@ -1,6 +1,5 @@
 package com.combatWombat.model;
 
-import com.apps.util.Prompter;
 import org.junit.Test;
 
 import java.io.File;
